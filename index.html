@@ -8,63 +8,67 @@
     <style>
         /* --- Global Styles & Variables --- */
         :root {
+            /* Sakura Palette (remains the same) */
             --deep-pink-red: #ec275f;
             --bright-pink: #f25477;
             --light-pink-salmon: #ffa7a6;
-            --very-light-pink: #ffdcdc;
-            --sky-blue-grey: #d4e0ee;
+            --very-light-pink: #ffdcdc; /* Can be used for text on dark or petals */
+            
+            /* Dark Theme Palette */
+            --dark-bg-primary: #282c34; /* Dark slate/charcoal */
+            --dark-bg-gradient-end: #1c1f24; /* Slightly darker for gradient */
+            --dark-section-bg: rgba(40, 44, 52, 0.85); /* For header, intro-section */
+            --dark-footer-bg: rgba(30, 33, 39, 0.7); /* Footer background */
+            --text-on-dark: var(--very-light-pink); /* Using lightest sakura pink for main text */
+            --text-on-dark-muted: #a0a0a0; /* For less important text if needed */
 
-            --text-dark: #333;
-            --text-light: #f8f8f8;
-            --nav-link-color: var(--deep-pink-red);
-            --nav-hover-bg: var(--very-light-pink);
+            /* General Variables */
             --container-padding: 20px;
-            --greeting-color: var(--deep-pink-red); /* Color for the new main greeting */
+            --greeting-color: var(--deep-pink-red); 
         }
 
         body {
             margin: 0;
             font-family: 'Open Sans', sans-serif;
-            color: var(--text-dark);
-            background: linear-gradient(to bottom, var(--sky-blue-grey), #e6f0f9);
+            color: var(--text-on-dark); /* Default text color for dark theme */
+            background: linear-gradient(to bottom, var(--dark-bg-primary), var(--dark-bg-gradient-end));
             line-height: 1.6;
             overflow-x: hidden;
             position: relative;
         }
 
         .container {
-            max-width: 800px; /* Slightly adjusted for more focused content area */
+            max-width: 800px;
             margin: 0 auto;
             padding: var(--container-padding);
         }
 
-        /* General Headings - H2 and H3 if you add more sections later */
         h2, h3 {
             font-family: 'Noto Sans JP', sans-serif;
-            color: var(--deep-pink-red); /* Standard heading color */
+            color: var(--deep-pink-red); /* Pinks will stand out on dark */
             margin-bottom: 0.8em;
             font-weight: 700;
         }
         h2 { font-size: 2em; }
         h3 { font-size: 1.7em; }
 
-
         p {
             margin-bottom: 1em;
-            font-size: 1.05em; /* Slightly larger body text for readability */
+            font-size: 1.05em;
         }
 
-        a {
-            color: var(--bright-pink);
+        a { /* General links */
+            color: var(--bright-pink); /* Bright pink for links */
             text-decoration: none;
+            transition: color 0.3s ease;
         }
 
         a:hover {
-            color: var(--deep-pink-red);
+            color: var(--light-pink-salmon); /* Lighter pink on hover */
             text-decoration: underline;
         }
 
-        /* --- Sakura Background & Petals --- */
+        /* --- Sakura Background & Petals (colors should pop on dark) --- */
         .sakura-container {
             position: fixed;
             top: 0;
@@ -72,7 +76,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1;
+            z-index: -1; /* Behind content, but ensure it's on top of body bg */
             overflow: hidden;
         }
 
@@ -81,144 +85,157 @@
             top: -20px;
             width: 15px;
             height: 10px;
-            background-color: var(--very-light-pink);
+            background-color: var(--very-light-pink); /* Main petal color */
             border-radius: 10px 50% / 20px 50%;
             opacity: 0;
             animation: fall linear infinite;
-            box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            /* Removed box-shadow as it's less effective on dark, can add light glow if desired */
         }
+        .petal:nth-child(odd) { background-color: var(--light-pink-salmon); } /* Alternate petal color */
 
-        .petal:nth-child(1) { left: 5%; width: 12px; height: 8px; background-color: var(--light-pink-salmon); animation-duration: 18s; animation-delay: 0s; }
+        /* Petal animation variations (same as before) */
+        .petal:nth-child(1) { left: 5%; width: 12px; height: 8px; animation-duration: 18s; animation-delay: 0s; }
         .petal:nth-child(2) { left: 15%; width: 15px; height: 10px; animation-duration: 12s; animation-delay: -3s; }
-        .petal:nth-child(3) { left: 25%; width: 10px; height: 7px; background-color: var(--light-pink-salmon); animation-duration: 20s; animation-delay: -7s; }
+        .petal:nth-child(3) { left: 25%; width: 10px; height: 7px; animation-duration: 20s; animation-delay: -7s; }
         .petal:nth-child(4) { left: 35%; width: 16px; height: 11px; animation-duration: 13s; animation-delay: -1.5s; }
-        .petal:nth-child(5) { left: 45%; width: 13px; height: 9px; background-color: var(--very-light-pink); animation-duration: 17s; animation-delay: -6s; }
-        .petal:nth-child(6) { left: 55%; width: 18px; height: 12px; background-color: var(--light-pink-salmon); animation-duration: 11s; animation-delay: -4s; }
+        .petal:nth-child(5) { left: 45%; width: 13px; height: 9px; animation-duration: 17s; animation-delay: -6s; }
+        .petal:nth-child(6) { left: 55%; width: 18px; height: 12px; animation-duration: 11s; animation-delay: -4s; }
         .petal:nth-child(7) { left: 65%; width: 14px; height: 9px; animation-duration: 22s; animation-delay: -8s; }
-        .petal:nth-child(8) { left: 75%; width: 12px; height: 8px; background-color: var(--very-light-pink); animation-duration: 16s; animation-delay: -2s; }
-        .petal:nth-child(9) { left: 85%; width: 15px; height: 10px; background-color: var(--light-pink-salmon); animation-duration: 14s; animation-delay: -5s; }
+        .petal:nth-child(8) { left: 75%; width: 12px; height: 8px; animation-duration: 16s; animation-delay: -2s; }
+        .petal:nth-child(9) { left: 85%; width: 15px; height: 10px; animation-duration: 14s; animation-delay: -5s; }
         .petal:nth-child(10) { left: 95%; width: 11px; height: 7px; animation-duration: 19s; animation-delay: -9s; }
 
         @keyframes fall {
             0% { transform: translateY(0vh) translateX(0vw) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
+            10% { opacity: 0.9; } /* Petals can be more opaque on dark */
             25% { transform: translateY(25vh) translateX(calc(-2vw + var(--sway-x, 0vw))) rotate(30deg); }
             50% { transform: translateY(50vh) translateX(calc(1vw + var(--sway-x, 0vw))) rotate(-20deg); }
             75% { transform: translateY(75vh) translateX(calc(-1.5vw + var(--sway-x, 0vw))) rotate(40deg); }
-            90% { opacity: 0.6; }
+            90% { opacity: 0.7; }
             100% { transform: translateY(110vh) translateX(calc(0.5vw + var(--sway-x, 0vw))) rotate(60deg); opacity: 0; }
         }
-
-        .petal:nth-child(odd) { --sway-x: 1.5vw; }
-        .petal:nth-child(even) { --sway-x: -1vw; }
+        .petal:nth-child(even) { --sway-x: 1.5vw; } /* Swapped for variety */
+        .petal:nth-child(odd) { --sway-x: -1vw; }
         .petal:nth-child(3n) { --sway-x: 0.5vw; }
+
 
         /* --- Header & Navigation --- */
         header {
-            background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(6px);
+            background-color: var(--dark-section-bg); /* Dark semi-transparent */
+            backdrop-filter: blur(8px); /* Slightly more blur for dark */
             padding: 1em 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3); /* Darker shadow, might still be subtle */
             width: 100%;
         }
 
         nav {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 var(--container-padding);
         }
-
         nav .logo {
             font-family: 'Noto Sans JP', sans-serif;
             font-size: 1.6em;
-            font-weight: 700; /* Bolder logo */
-            color: var(--deep-pink-red);
-        }
-
-        nav ul { list-style: none; padding: 0; margin: 0; display: flex; }
-        nav ul li { margin-left: 25px; }
-        nav ul li a {
-            font-family: 'Noto Sans JP', sans-serif;
             font-weight: 700;
-            color: var(--nav-link-color);
-            text-decoration: none;
-            padding: 0.5em 0.8em;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        nav ul li a:hover,
-        nav ul li a.active {
-            background-color: var(--nav-hover-bg);
-            color: var(--deep-pink-red);
+            color: var(--deep-pink-red); /* Logo color remains pink */
         }
 
         /* --- Main Content Area --- */
-        main { /* Removed #home id styling, directly styling main or a new content wrapper */
-            padding-top: 40px; /* Increased padding from sticky header */
-            padding-bottom: 40px; /* Added padding at the bottom */
+        main {
+            padding-top: 40px; 
+            padding-bottom: 40px; 
             position: relative;
             z-index: 1;
         }
 
-        #intro-section { /* This is the primary content section now */
-            background-color: rgba(255, 253, 253, 0.8); /* Slightly more opaque for better text readability */
-            margin: 0 auto; /* Centered if container not used directly on section */
-            max-width: 800px; /* Consistent with .container */
+        #intro-section {
+            background-color: var(--dark-section-bg); /* Dark semi-transparent */
+            margin: 0 auto; 
+            max-width: 800px; 
             border-radius: 8px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.08);
-            padding: 2.5em var(--container-padding); /* Generous padding */
-            text-align: center; /* Center the greeting and button */
+            box-shadow: 0 0 25px rgba(0,0,0,0.2); /* Subtle shadow */
+            padding: 2.5em var(--container-padding);
+            text-align: center; 
+            border: 1px solid rgba(var(--light-pink-salmon-rgb, 255,167,166), 0.2); /* Subtle pink border */
+        }
+        /* Add RGB version of light-pink-salmon for the border if needed */
+        :root {
+            --light-pink-salmon-rgb: 255,167,166; /* For use in rgba() */
         }
         
         .main-greeting {
             font-family: 'Noto Sans JP', sans-serif;
-            font-size: 2.8em; /* Big font */
-            font-weight: 900; /* Extra bold for Noto Sans JP if available or use 700 */
-            color: var(--greeting-color);
+            font-size: 2.8em; 
+            font-weight: 900; 
+            color: var(--greeting-color); /* Pink greeting */
             margin-bottom: 0.6em;
             line-height: 1.3;
         }
-
         .main-greeting .nickname {
-            font-weight: 700; /* Slightly less heavy than main name, or same */
-            color: var(--bright-pink); /* Optional: different color for aka */
-            /* display: block; /* If you want "aka j0ey17" on a new line */
-            /* font-size: 0.7em; /* If you want "aka j0ey17" smaller */
+            font-weight: 700; 
+            color: var(--bright-pink); 
         }
         
-        #intro-section .container p { /* Paragraphs within the intro section */
-            text-align: left; /* Keep bio paragraphs left-aligned */
+        #intro-section .bio-paragraphs {
+             padding: 0 var(--container-padding);
+        }
+        #intro-section .bio-paragraphs p {
+            text-align: left; 
+            color: var(--text-on-dark); /* Ensure bio text uses light color */
         }
 
-
-        .profile-photo { /* If you decide to add one */
-            display: block;
-            max-width: 180px;
-            border-radius: 50%;
-            margin: 30px auto;
-            border: 5px solid var(--light-pink-salmon);
+        /* --- Social Links --- */
+        .social-links {
+            margin-top: 25px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .social-link {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 700;
+            color: var(--very-light-pink); /* Text color for social links */
+            background-color: rgba(var(--deep-pink-red-rgb, 236,39,95), 0.3); /* Darker, semi-transparent pink */
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            border: 1px solid var(--deep-pink-red); /* Stronger pink border */
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+        /* Add RGB version of deep-pink-red */
+        :root {
+            --deep-pink-red-rgb: 236,39,95;
+        }
+        .social-link:hover {
+            background-color: var(--deep-pink-red);
+            color: white; /* White text on hover for max contrast */
+            text-decoration: none;
+            border-color: var(--bright-pink);
+            transform: translateY(-2px);
         }
 
         /* --- Resume Download Button Style --- */
-        .btn-download {
+        .btn-download { /* Pinks should still work well */
             display: inline-block;
             background-color: var(--bright-pink);
-            color: white;
-            padding: 14px 28px; /* Slightly larger button */
+            color: white; /* Ensure contrast */
+            padding: 14px 28px;
             font-family: 'Noto Sans JP', sans-serif;
             font-size: 1.15em;
             font-weight: 700;
             border-radius: 5px;
             text-decoration: none;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            margin: 35px auto 15px auto;
-            border: none;
+            margin: 15px auto;
+            border: none; /* Or a light border: 1px solid var(--light-pink-salmon); */
             cursor: pointer;
         }
         .btn-download:hover {
@@ -231,34 +248,30 @@
         /* --- Footer --- */
         footer {
             text-align: center;
-            padding: 2.5em 0; /* Increased padding */
-            background-color: rgba(255,220,220, 0.35);
-            color: var(--text-dark);
-            margin-top: 40px; /* Increased margin */
-            border-top: 1px solid var(--light-pink-salmon);
+            padding: 2.5em 0;
+            background-color: var(--dark-footer-bg); /* Dark footer */
+            color: var(--text-on-dark-muted); /* Muted light text for footer */
+            margin-top: 40px;
+            border-top: 1px solid rgba(var(--light-pink-salmon-rgb,255,167,166),0.3); /* Subtle pink top border */
         }
         footer p { margin: 0; font-size: 0.95em; }
 
-        /* --- Responsive Adjustments --- */
+        /* --- Responsive Adjustments (largely the same, check contrasts) --- */
         @media (max-width: 768px) {
-            nav { flex-direction: column; align-items: center; }
-            nav .logo { margin-bottom: 0.5em; }
-            nav ul { margin-top: 0.5em; justify-content: center; flex-wrap: wrap; }
-            nav ul li { margin: 5px 10px; }
-            
-            .main-greeting { font-size: 2.2em; } /* Adjust greeting size for mobile */
-            #intro-section .container p { font-size: 1em; } /* Adjust bio text size */
-
-            .container, #intro-section { padding-left: 15px; padding-right: 15px; } /* Ensure padding consistency */
-            main { padding-top: 20px; padding-bottom: 20px; margin-left: 5px; margin-right: 5px;}
-            #intro-section { margin-left: 5px; margin-right: 5px; padding: 1.5em; }
-
-
+            .main-greeting { font-size: 2.2em; }
+            #intro-section .bio-paragraphs p { font-size: 1em; }
+            main { padding-top: 20px; padding-bottom: 20px; }
+            #intro-section { padding: 1.5em 15px; }
+            #intro-section .bio-paragraphs { padding: 0; }
             .petal { width: 10px; height: 7px; }
+            .social-links { gap: 15px; }
+            .social-link { padding: 7px 12px; font-size: 0.9em; }
         }
          @media (max-width: 480px) {
             .main-greeting { font-size: 1.8em; }
             nav .logo { font-size: 1.4em; }
+            .social-links { flex-direction: column; align-items: center; gap: 10px; }
+            .social-link { width: 70%; text-align: center; }
          }
     </style>
 </head>
@@ -273,15 +286,14 @@
     <header>
         <nav>
             <div class="logo">Shantanu Saxena</div>
-            <ul>
-                <li><a href="index.html" class="active">Home</a></li>
-            </ul>
         </nav>
     </header>
 
-    <main> <section id="intro-section">
+    <main>
+        <section id="intro-section">
             <h1 class="main-greeting">Hi! I am Shantanu <strong class="nickname">aka j0ey17</strong></h1>
-            <div class="container"> <p>
+            <div class="bio-paragraphs">
+                <p>
                     I am a network and web application penetration tester specializing in WebApp and API pentesting.
                     I hold multiple certifications, including eWPTX and eJPT, and I am actively working towards my OSCP.
                 </p>
@@ -291,17 +303,22 @@
                 </p>
                 <p>
                     I have a keen interest in exploit development using low-level languages like C/C++, and I am also expanding my knowledge in Incident Response.
-                    Beyond the world of tech, I am passionate about fitness and have made considerable progress in the gym, always looking to get stronger and more fit.
+                    Beyond the world of tech, I am passionate about fitness and have made considerable progress in the gym, always looking to get stronger.
                 </p>
-                <a href="assets/resume.pdf" class="btn-download" download>Download My Resume</a>
             </div>
+            <div class="social-links">
+                <a href="https://www.youtube.com/@TnT-with-j0ey" target="_blank" class="social-link">YouTube</a>
+                <a href="https://www.linkedin.com/in/shantanusaxena1/" target="_blank" class="social-link">LinkedIn</a>
+                <a href="https://github.com/J0ey17/" target="_blank" class="social-link">GitHub</a>
+            </div>
+            <a href="assets/resume.pdf" class="btn-download" download>Download My Resume</a>
         </section>
     </main>
 
     <footer>
         <div class="container">
             <p>&copy; <span id="currentYear"></span> Shantanu Saxena. All Rights Reserved.</p>
-            </div>
+        </div>
     </footer>
 
     <script>
